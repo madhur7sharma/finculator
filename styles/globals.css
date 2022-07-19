@@ -12,3 +12,7 @@
     border-radius: 4px;
     background-color: aqua;
 }
+.custLink {
+    font-weight: 600;
+    cursor: pointer;
+}

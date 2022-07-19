@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";  
+import CredentialsProvider from "next-auth/providers/credentials";
+import fn from "../../../helpers/be-functions";
 
 export default NextAuth({
     session: {
@@ -11,15 +12,20 @@ export default NextAuth({
             name: "credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Passwrod", type: "password" },
+                password: { label: "Password", type: "password" },
             },
             authorize: async (credentials) => {
-                if (credentials.email === "ms@gmail.com" && credentials.password === "msd") {
-                    return {
-                        name: credentials.email,
-                        email: credentials.email,
-                    };
+                const user = await fn.find_user(credentials.email);
+                if (user) {
+                    const user_auth = await fn.verify_password(credentials.email, credentials.password);
+                    if (user_auth) {
+                        return {
+                            name: user,
+                            email: credentials.email,
+                        };
+                    }
                 }
+                return null;
             },
         }),
     ],
