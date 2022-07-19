@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inputbox {
+    width: 240px;
+    height: 30px;
+    padding: 4px;
+}
+.custButton {
+    padding: 4px;
+    border-radius: 4px;
+    background-color: aqua;
+}
