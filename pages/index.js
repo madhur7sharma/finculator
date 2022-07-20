@@ -8,14 +8,11 @@ import PageWrapper from "../helpers/pagewrapper";
 // import Link from "next/link";
 
 export default function Home() {
-    const { data: session, status } = useSession();
-    console.log("status", status);
-    console.log("session", session);
+    // const { data: session, status } = useSession();
     return (
         <PageWrapper>
-            <div className="h-48 bg-red-300 flex flex-col items-center gap-4">
-                <h2 className="text-center">Finculator</h2>
-                <CustLink href={`/login`}>Login</CustLink>
+            <div className="flex flex-col items-center gap-4">
+                {/* <img className="" src="/logo.png" alt="logo" /> */}
             </div>
         </PageWrapper>
     );
