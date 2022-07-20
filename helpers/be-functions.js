@@ -1,5 +1,16 @@
 const db = require("./database");
 const User = require("../schemas/site-schema");
+const Accesshash = require("../schemas/access-hash");
+
+var fnHelpers = {
+    filteredData: function (user) {
+        const filter = {
+            name: user.name,
+            email: user.email,
+        };
+        return filter;
+    },
+};
 
 var fn = {
     new_user: async function (userData) {
@@ -11,7 +22,7 @@ var fn = {
             const user = new User(userData);
             if (user) {
                 await user.save();
-                return user;
+                return fnHelpers.filteredData(user);
             }
         } catch (error) {
             console.log(error);
@@ -22,10 +33,7 @@ var fn = {
         try {
             const user = await User.findOne({ email: email });
             if (user) {
-                var filteredData = {};
-                filteredData.name = user.name;
-                filteredData.username = user.username;
-                return filteredData;
+                return user;
             }
             return null;
         } catch (error) {
@@ -33,10 +41,65 @@ var fn = {
             return false;
         }
     },
-    verify_password: async function (email, password) {
+    verify_user: async function (id) {
         try {
-            const auth = await User.findOne({ email: email });
-            return auth.password === password;
+            const siteDoc = await User.findOne({ _id: id });
+            if (siteDoc && !siteDoc.verified) {
+                siteDoc.verified = true;
+                await siteDoc.save();
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    send_reset_passwordLink: async function (email) {
+        try {
+            const userFind = await User.findOne({ email: email });
+            if (!userFind) {
+                return 404;
+            }
+            const alreadySent = await Accesshash.findOne({ email: email });
+            if (alreadySent) {
+                return 422;
+            }
+            const accessHash = new Accesshash({ email: email });
+            if (accessHash) {
+                await accessHash.save();
+                return accessHash._id;
+            }
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    verify_accessHash: async function (hashId) {
+        try {
+            const hash = await Accesshash.findOne({ _id: hashId });
+            if (hash) {
+                return hash;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    reset_password: async function (email, newPassword) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                user.password = newPassword;
+                await user.save();
+                const hash = await Accesshash.findOne({ email: email });
+                if (hash) {
+                    await hash.delete();
+                    return true;
+                }
+            }
+            return false;
         } catch (error) {
             console.log(error);
             return false;

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import fn from "../../../helpers/be-functions";
+import { verifyPassword } from "../../../helpers/encrypt-password";
 
 export default NextAuth({
     session: {
@@ -17,8 +18,9 @@ export default NextAuth({
             authorize: async (credentials) => {
                 const user = await fn.find_user(credentials.email);
                 if (user) {
-                    const user_auth = await fn.verify_password(credentials.email, credentials.password);
-                    if (user_auth) {
+                    const decryptedPassword = await verifyPassword(credentials.password, user.password);
+                    // const user_auth = await fn.verify_password(credentials.email, credentials.password);
+                    if (decryptedPassword) {
                         return {
                             name: user,
                             email: credentials.email,

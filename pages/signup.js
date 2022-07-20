@@ -4,12 +4,14 @@ import Input from "../components/input";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { useState } from "react";
 import PageWrapper from "../helpers/pagewrapper";
+import feFunctions from "../helpers/fe-function";
 
 export default function Signup() {
     const { data: session, status } = useSession();
     // console.log("session", session);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [message, setMessage] = useState(null);
     async function newUser() {
         const userBody = {
             email: email,
@@ -30,6 +32,8 @@ export default function Signup() {
                         password: userBody.password,
                     });
                 }
+                const data = await resp.json();
+                setMessage(data.message);
             }
         } catch (error) {
             console.log(error);
@@ -44,6 +48,7 @@ export default function Signup() {
                 <div className="flex items-center justify-center gap-4">
                     <Button onClick={newUser}>Sign Up</Button>
                 </div>
+                <p>{message}</p>
             </div>
         </PageWrapper>
     );

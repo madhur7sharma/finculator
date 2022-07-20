@@ -12,10 +12,6 @@ export default async function handler(req, res) {
             res.status(409).json({ message: "Email already exist" });
             return;
         }
-        if (new_user === 408) {
-            res.status(408).json({ message: "Username already taken" });
-            return;
-        }
         await sendConfirmationEmail(new_user);
         return res.status(200).json({ message: "success" });
     } catch (error) {
