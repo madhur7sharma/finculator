@@ -22,12 +22,14 @@ export default NextAuth({
                     // const user_auth = await fn.verify_password(credentials.email, credentials.password);
                     if (decryptedPassword) {
                         return {
-                            name: user,
                             email: credentials.email,
                         };
+                    } else {
+                        throw new Error("Wrong Credentials");
                     }
+                } else {
+                    throw new Error("User not found!");
                 }
-                return null;
             },
         }),
     ],

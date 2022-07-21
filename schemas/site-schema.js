@@ -5,9 +5,10 @@ mongoose.Promise = global.Promise;
 
 var user = new mongoose.Schema(
     {
-        name: { type: String, default: "Owner name" },
+        name: { type: String, required: true },
+        gender: { type: String },
         email: { type: String, unique: true, required: true },
-        password: { type: String, default: "madhur" },
+        password: { type: String, required: true },
         verified: { type: Boolean, default: false, required: true },
     },
     { timestamps: true }

@@ -4,7 +4,7 @@ import Input from "../components/input";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { useState } from "react";
 import CustLink from "../components/link";
-import PageWrapper from "../helpers/pagewrapper";
+import PageWrapper from "../components/pagewrapper";
 // import Link from "next/link";
 
 export default function Home() {

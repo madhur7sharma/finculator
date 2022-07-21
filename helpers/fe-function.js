@@ -1,11 +1,18 @@
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const feFunctions = {
     initializeLogin: async function (credentials) {
         try {
-            await signIn("credentials", {
-                email: credentials.email,
-                password: credentials.password,
+            // const router = useRouter();
+            await signIn("credentials", { redirect: false, email: credentials.email, password: credentials.password }).then(({ ok, error }) => {
+                if (ok) {
+                    console.log("OKK- Redirect");
+                    // router.push("/user-profile");
+                } else {
+                    console.log(error);
+                    return error;
+                }
             });
         } catch (error) {
             console.log(error);

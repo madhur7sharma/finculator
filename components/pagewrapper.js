@@ -24,10 +24,11 @@ export default function PageWrapper(props) {
                         </>
                     ) : (
                         <>
-                            <CustLink href={`/login`}>Profile</CustLink>
+                            <CustLink href={`/user-profile`}>Profile</CustLink>
                             <a className="custLink" onClick={signOut}>
                                 Sign Out
                             </a>
+                            <CustLink href={`/user-profile/edit`}>Edit Profile</CustLink>
                         </>
                     )}
                     <CustLink href={`/calculators`}>Calculators</CustLink>

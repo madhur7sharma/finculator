@@ -4,7 +4,7 @@ import { sendConfirmationEmail } from "../../helpers/mailer";
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
-        return;
+        return res.status(400).json({ message: "Request method not allowed" });
     }
     try {
         const new_user = await fn.new_user(req.body);

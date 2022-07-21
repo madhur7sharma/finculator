@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import fn from "../../helpers/be-functions";
-import PageWrapper from "../../helpers/pagewrapper";
+import PageWrapper from "../../components/pagewrapper";
 
 export default function Verification(props) {
     const { verified } = props;

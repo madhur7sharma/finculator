@@ -1,12 +1,14 @@
 const db = require("./database");
 const User = require("../schemas/site-schema");
 const Accesshash = require("../schemas/access-hash");
+const _ = require("lodash");
 
 var fnHelpers = {
     filteredData: function (user) {
         const filter = {
             name: user.name,
             email: user.email,
+            gender: user.gender,
         };
         return filter;
     },
@@ -100,6 +102,32 @@ var fn = {
                 }
             }
             return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    user_details: async function (email) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                return fnHelpers.filteredData(user);
+            }
+            return null;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    update_user: async function (email, details) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                _.merge(user, details);
+                await user.save();
+                return fnHelpers.filteredData(user);
+            }
+            return null;
         } catch (error) {
             console.log(error);
             return false;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import fn from "../../helpers/be-functions";
-import PageWrapper from "../../helpers/pagewrapper";
+import PageWrapper from "../../components/pagewrapper";
 
 export default function ResetPassword(props) {
     const { user } = props;
