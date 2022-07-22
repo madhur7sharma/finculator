@@ -7,10 +7,12 @@ import PageWrapper from "../components/pagewrapper";
 import feFunctions from "../helpers/fe-function";
 import CustLink from "../components/link";
 import SiteContext from "../helpers/context";
+import { useRouter } from "next/router";
 
 export default function Signup() {
     const { data: session, status } = useSession();
     const toast = useContext(SiteContext);
+    const router = useRouter();
     // console.log("session", session);
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
@@ -35,13 +37,22 @@ export default function Signup() {
             });
             if (resp) {
                 if (resp.status === 200) {
-                    await signIn("credentials", {
-                        email: userBody.email,
-                        password: userBody.password,
+                    // await signIn("credentials", {
+                    //     email: userBody.email,
+                    //     password: userBody.password,
+                    // });
+                    await signIn("credentials", { redirect: false, email: userBody.email, password: userBody.password }).then(({ ok, error }) => {
+                        if (ok) {
+                            toast("success", "Login successfull!");
+                            router.push("/user-profile");
+                        } else {
+                            toast("error", error);
+                        }
                     });
+                } else {
+                    const data = await resp.json();
+                    toast("error", data.message);
                 }
-                const data = await resp.json();
-                toast("error", data.message);
             }
         } catch (error) {
             console.log(error);
@@ -107,4 +118,18 @@ export default function Signup() {
             </div>
         </PageWrapper>
     );
+}
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/user-profile`,
+            },
+        };
+    }
+    return {
+        props: {},
+    };
 }

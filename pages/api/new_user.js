@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             res.status(409).json({ message: "Email already exist" });
             return;
         }
-        await sendConfirmationEmail(new_user);
+        // await sendConfirmationEmail(new_user);
         return res.status(200).json({ message: "success" });
     } catch (error) {
         console.log(error);
