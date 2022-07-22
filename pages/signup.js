@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Button from "../components/button";
-import Input from "../components/Input";
+import Input from "../components/input";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 import PageWrapper from "../components/pagewrapper";

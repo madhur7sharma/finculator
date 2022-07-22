@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 import { useState, useContext } from "react";
 import SiteContext from "../../helpers/context";
 import Button from "../../components/button";
-import Input from "../../components/Input";
+import Input from "../../components/input";
 import CustLink from "../../components/link";
 import PageWrapper from "../../components/pagewrapper";
 import fn from "../../helpers/be-functions";
