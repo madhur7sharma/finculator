@@ -127,4 +127,5 @@ const Alert = forwardRef(({ autoClose, autoCloseTime = 4000 }, ref) => {
         <></>
     );
 });
+Alert.displayName = "Alert";
 export default Alert;

@@ -89,7 +89,7 @@ export default function Signup() {
                         <div className="w-full mt-4">
                             <Input required type="password" id="conpassword" name="conpassword" onChange={(e) => setConPassword(e.target.value)} placeholder="Confirm Password" />
                         </div>
-                        {regex && <p className="text-red-500">Password Didn't Match!</p>}
+                        {regex && <p className="text-red-500">Password Didn&apos;t Match!</p>}
 
                         <div className="flex items-center justify-between mt-4">
                             <Button type="submit">Sign Up</Button>
