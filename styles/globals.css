@@ -28,3 +28,9 @@ body {
     padding-left: 6px;
     color: #9ca3af;
 }
+.lineClamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
