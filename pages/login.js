@@ -8,6 +8,7 @@ import feFunctions from "../helpers/fe-function";
 import CustLink from "../components/link";
 import { useRouter } from "next/router";
 import SiteContext from "../helpers/context";
+import { TbLoaderQuarter } from "react-icons/tb";
 
 export default function Login() {
     const { data: session, status } = useSession();
@@ -16,6 +17,7 @@ export default function Login() {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [loginSuccess, setLoginSuccess] = useState(false);
     const router = useRouter();
 
     async function login(e) {
@@ -24,6 +26,7 @@ export default function Login() {
             await signIn("credentials", { redirect: false, email: email, password: password }).then(({ ok, error }) => {
                 if (ok) {
                     toast("success", "Login successfull!");
+                    setLoginSuccess(true);
                     router.push("/user-profile");
                 } else {
                     toast("error", error);
@@ -36,49 +39,56 @@ export default function Login() {
 
     return (
         <PageWrapper>
-            <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg dark:bg-gray-800 shadow-sm shadow-gray-600 mt-8 border border-gray-600">
-                <div className="px-6 py-8">
-                    <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">Finculator</h2>
+            {!loginSuccess ? (
+                <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg dark:bg-gray-800 shadow-sm shadow-gray-600 mt-8 border border-gray-600">
+                    <div className="px-6 py-8">
+                        <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">Finculator</h2>
 
-                    <h3 className="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
+                        <h3 className="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
 
-                    <p className="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
+                        <p className="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
 
-                    <form onSubmit={(e) => login(e)} className="pt-6">
-                        <div className="w-full mt-4">
-                            <Input required type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" aria-label="Email Address" />
-                        </div>
+                        <form onSubmit={(e) => login(e)} className="pt-6">
+                            <div className="w-full mt-4">
+                                <Input required type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" aria-label="Email Address" />
+                            </div>
 
-                        <div className="w-full mt-4">
-                            <Input
-                                required
-                                type="password"
-                                id="password"
-                                name="password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Password"
-                                aria-label="Password"
-                            />
-                        </div>
+                            <div className="w-full mt-4">
+                                <Input
+                                    required
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Password"
+                                    aria-label="Password"
+                                />
+                            </div>
 
-                        <div className="flex items-center justify-between mt-4">
-                            <CustLink href={`/forgot_password`} className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">
-                                Forget Password?
-                            </CustLink>
+                            <div className="flex items-center justify-between mt-4">
+                                <CustLink href={`/forgot_password`} className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">
+                                    Forget Password?
+                                </CustLink>
 
-                            <Button type="submit">Login</Button>
-                        </div>
-                    </form>
+                                <Button type="submit">Login</Button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
+                        <span className="text-sm text-gray-600 dark:text-gray-200">Don&apos;t have an account? </span>
+
+                        <CustLink href={`/signup`} className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">
+                            Register
+                        </CustLink>
+                    </div>
                 </div>
-
-                <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
-                    <span className="text-sm text-gray-600 dark:text-gray-200">Don&apos;t have an account? </span>
-
-                    <CustLink href={`/signup`} className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">
-                        Register
-                    </CustLink>
+            ) : (
+                <div className="flex flex-col items-center justify-center h-[300px] gap-8">
+                    <TbLoaderQuarter className="animate-spin text-5xl" />
+                    <p className="text-xl">Please wait while we log you in!</p>
                 </div>
-            </div>
+            )}
         </PageWrapper>
     );
 }

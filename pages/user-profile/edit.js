@@ -34,6 +34,7 @@ export default function EditProfile(props) {
                 }
             });
         } catch (error) {
+            toast("error", "Something went wrong!");
             console.log(error);
         }
     }
@@ -86,14 +87,6 @@ export default function EditProfile(props) {
                             <Button type="submit">Update</Button>
                         </div>
                     </form>
-                </div>
-
-                <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
-                    <span className="text-sm text-gray-600 dark:text-gray-200">Already have an account? </span>
-
-                    <CustLink href={`/login`} className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">
-                        Login
-                    </CustLink>
                 </div>
             </div>
         </PageWrapper>

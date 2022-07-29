@@ -18,6 +18,7 @@ export default function PageWrapper(props) {
                         </button>
                     </div>
                     <div className={`${slide ? "h-36" : "md:h-20 h-0"} transition-height duration-500 overflow-hidden flex flex-col md:flex-row md:items-center gap-4`}>
+                        <CustLink href={`/calculators`}>Calculators</CustLink>
                         {status !== "authenticated" ? (
                             <>
                                 <CustLink href={`/login`}>Login</CustLink>
@@ -26,18 +27,18 @@ export default function PageWrapper(props) {
                         ) : (
                             <>
                                 <CustLink href={`/user-profile`}>Profile</CustLink>
+                                <CustLink href={`/user-profile/edit`}>Edit Profile</CustLink>
+                                <CustLink href={`/planner`}>Planner</CustLink>
                                 <a className="custLink" onClick={signOut}>
                                     Sign Out
                                 </a>
-                                <CustLink href={`/user-profile/edit`}>Edit Profile</CustLink>
                             </>
                         )}
-                        <CustLink href={`/calculators`}>Calculators</CustLink>
                     </div>
                 </div>
             </nav>
-            <main className="max-w-[1300px] mx-auto px-4 overflow-hidden">{props.children}</main>
-            <hr className="h-px my-6 bg-gray-300 border-none dark:bg-gray-500 mt-32" />
+            <main className="max-w-[1300px] mx-auto px-4 pb-24 overflow-hidden">{props.children}</main>
+            <hr className="h-px mb-6 bg-gray-300 border-none dark:bg-gray-500" />
             <footer className="bg-white dark:bg-gray-800">
                 <div className="max-w-[1300px] mx-auto px-4 py-4">
                     <div className="lg:flex">

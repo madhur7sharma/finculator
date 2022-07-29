@@ -15,7 +15,9 @@ var user = new mongoose.Schema(
 );
 user.pre("save", async function (next) {
     var self = this;
-    self.password = await hashPassword(self.password);
+    if (self.isModified("password")) {
+        self.password = await hashPassword(self.password);
+    }
     next();
 });
 module.exports = mongoose.models.user || mongoose.model("user", user);

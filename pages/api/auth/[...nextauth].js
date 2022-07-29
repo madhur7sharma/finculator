@@ -20,6 +20,7 @@ export default NextAuth({
                 if (user) {
                     const decryptedPassword = await verifyPassword(credentials.password, user.password);
                     // const user_auth = await fn.verify_password(credentials.email, credentials.password);
+                    // console.log(decryptedPassword, credentials.password, credentials.email);
                     if (decryptedPassword) {
                         return {
                             email: credentials.email,

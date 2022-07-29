@@ -43,7 +43,7 @@ export default function Signup() {
                     // });
                     await signIn("credentials", { redirect: false, email: userBody.email, password: userBody.password }).then(({ ok, error }) => {
                         if (ok) {
-                            toast("success", "Login successfull!");
+                            toast("success", "Signup successfull!");
                             router.push("/user-profile");
                         } else {
                             toast("error", error);
