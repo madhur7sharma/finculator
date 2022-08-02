@@ -29,7 +29,7 @@ const Alert = forwardRef(({ autoClose, autoCloseTime = 4000 }, ref) => {
     }, [toasts, autoCloseTime, autoClose]);
     return loaded ? (
         ReactDOM.createPortal(
-            <div className="fixed bottom-8 right-8">
+            <div style={{ zIndex: 9999 }} className="fixed bottom-8 right-8">
                 {toasts.map((item, pos) => {
                     if (item.type === "success") {
                         return (

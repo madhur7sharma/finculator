@@ -2,11 +2,16 @@ import CustLink from "../components/link";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
+import Head from "next/head";
 export default function PageWrapper(props) {
     const { data: session, status } = useSession();
     const [slide, setSlide] = useState(false);
+    const { title = "Finculator" } = props;
     return (
         <section className="dark">
+            <Head>
+                <title>{title}</title>
+            </Head>
             <nav className="bg-white dark:bg-gray-700 px-4">
                 <div className="md:flex max-w-[1300px] mx-auto px-">
                     <div className={`shadow h-20 flex items-center justify-between`}>
@@ -17,7 +22,7 @@ export default function PageWrapper(props) {
                             <GiHamburgerMenu onClick={() => setSlide(!slide)} />
                         </button>
                     </div>
-                    <div className={`${slide ? "h-36" : "md:h-20 h-0"} transition-height duration-500 overflow-hidden flex flex-col md:flex-row md:items-center gap-4`}>
+                    <div className={`${slide ? "h-60" : "md:h-20 h-0"} transition-height duration-500 overflow-hidden flex flex-col md:flex-row md:items-center gap-4`}>
                         <CustLink href={`/calculators`}>Calculators</CustLink>
                         {status !== "authenticated" ? (
                             <>
@@ -29,6 +34,7 @@ export default function PageWrapper(props) {
                                 <CustLink href={`/user-profile`}>Profile</CustLink>
                                 <CustLink href={`/user-profile/edit`}>Edit Profile</CustLink>
                                 <CustLink href={`/planner`}>Planner</CustLink>
+                                <CustLink href={`/expense-tracker`}>Expense Tracker</CustLink>
                                 <a className="custLink" onClick={signOut}>
                                     Sign Out
                                 </a>

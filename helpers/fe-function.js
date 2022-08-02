@@ -39,6 +39,12 @@ const feFunctions = {
             console.log(error);
         }
     },
+    removeEmptyKeys: function (obj) {
+        return Object.entries(obj)
+            .filter(([_, v]) => v !== null && v !== undefined && v !== "")
+            .reduce((acc, [k, v]) => ({ ...acc, [k]: v === Object(v) ? feFunctions.removeEmptyKeys(v) : v }), {});
+    },
+    
 };
 
 export default feFunctions;

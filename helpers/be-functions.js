@@ -1,11 +1,16 @@
 const db = require("./database");
 const User = require("../schemas/site-schema");
 const Accesshash = require("../schemas/access-hash");
+const Dreamhouse = require("../schemas/plans/dreamhouse-schema");
+const Childrenmarriage = require("../schemas/plans/childrenmarriage-schema");
+const plans = require("../schemas/plans/plan-discriminator");
+const Expense = require("../schemas/expense-schema");
 const _ = require("lodash");
 
 var fnHelpers = {
     filteredData: function (user) {
         const filter = {
+            user_id: user._id,
             name: user.name,
             email: user.email,
             gender: user.gender,
@@ -128,6 +133,140 @@ var fn = {
                 return fnHelpers.filteredData(user);
             }
             return null;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    get_plans: async function (userId, plan) {
+        try {
+            const myPlans = await plans.find({ user_id: userId, __t: plan });
+            return myPlans;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    plan: async function (email, details, plannerName) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                const allPlans = {
+                    childrenmarriage: new Childrenmarriage(details),
+                    dreamhouse: new Dreamhouse(details),
+                };
+                const newPlan = allPlans[plannerName];
+                if (newPlan) {
+                    user.plans.push(newPlan);
+                    newPlan.user_id = user._id;
+                    await newPlan.save();
+                    await user.save();
+                    return newPlan;
+                }
+                return false;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    update_plan: async function (email, details) {
+        try {
+            const myPlan = await plans.findOne({ _id: details._id });
+            if (myPlan) {
+                _.merge(myPlan, details);
+                await myPlan.save();
+                return myPlan;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    delete_plan: async function (email, details) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                const myPlan = await plans.findOne({ _id: details._id });
+                if (myPlan) {
+                    const index = user.plans.indexOf(details._id);
+                    if (index > -1) {
+                        user.plans.splice(index, 1);
+                    }
+                    await user.save();
+                    await myPlan.delete();
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    get_expenses: async function (userId) {
+        try {
+            const myExpenses = await Expense.find({ user_id: userId });
+            return myExpenses;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    expense: async function (email, details) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                console.log(user, details);
+                const newExpense = new Expense(details);
+                if (newExpense) {
+                    user.expenses.push(newExpense);
+                    newExpense.user_id = user._id;
+                    await newExpense.save();
+                    await user.save();
+                    return newExpense;
+                }
+                return false;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    update_expense: async function (email, details) {
+        try {
+            const myExpense = await Expense.findOne({ _id: details._id });
+            console.log("details", details, myExpense);
+            if (myExpense) {
+                _.merge(myExpense, details);
+                await myExpense.save();
+                return myExpense;
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    delete_expense: async function (email, details) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                const myExpense = await Expense.findOne({ _id: details._id });
+                if (myExpense) {
+                    const index = user.expenses.indexOf(details._id);
+                    if (index > -1) {
+                        user.expenses.splice(index, 1);
+                    }
+                    await user.save();
+                    await myExpense.delete();
+                    return true;
+                }
+            }
+            return false;
         } catch (error) {
             console.log(error);
             return false;

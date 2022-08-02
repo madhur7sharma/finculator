@@ -10,6 +10,8 @@ var user = new mongoose.Schema(
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
         verified: { type: Boolean, default: false, required: true },
+        plans: [{ type: Schema.Types.ObjectId, ref: "plans" }],
+        expenses: [{ type: Schema.Types.ObjectId, ref: "expense" }],
     },
     { timestamps: true }
 );
