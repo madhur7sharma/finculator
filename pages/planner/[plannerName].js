@@ -138,13 +138,13 @@ export default function Planner(props) {
     return (
         <PageWrapper title={plannerData.name}>
             <div className="">
-                <h1 className="font-semibold md:text-[36px] text-[30px] mt-6 mb-10">{plannerData.name}</h1>
+                <h1 className="font-semibold md:text-[36px] text-[30px] mt-6 mb-10 text-center">{plannerData.name}</h1>
                 <div className="flex md:flex-row md:gap-0 gap-12 flex-col-reverse items-center justify-center">
                     <div className="md:w-1/2 w-full">
                         <form id="Form" onSubmit={(e) => calculate(e)} className="flex flex-col justify-center items-center">
                             <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-6 w-full">
                                 {plannerData.input.map((item, pos) => {
-                                    return <Input key={pos} {...item} />;
+                                    return <Input className="inputboxBlack" key={pos} {...item} />;
                                 })}
                             </div>
                             <div className="mt-8 flex items-center justify-center- gap-8">
@@ -251,12 +251,41 @@ export default function Planner(props) {
             </div>
             <Modal active={modal} cancel={() => setModal(false)}>
                 <form id="PlanForm" onSubmit={(e) => plan(e, currentPlan && currentPlan._id ? "PATCH" : "POST", currentPlan && currentPlan._id)}>
-                    <Input defaultValue={currentPlan && currentPlan.address} name={`address`} placeholder={`House Address`} />
-                    <Input defaultValue={currentPlan && currentPlan.user_data.startingCost} type="number" name={`startingCost`} id={`startingCost`} placeholder={`Starting Cost`} />
-                    <Input defaultValue={currentPlan && currentPlan.user_data.inflation} type="number" name={`inflation`} id={`inflation`} placeholder={`Inflation`} />
-                    <Input defaultValue={currentPlan && currentPlan.user_data.startAge} type="number" name={`startAge`} id={`startAge`} placeholder={`Start Age`} />
-                    <Input defaultValue={currentPlan && currentPlan.user_data.endAge} type="number" name={`endAge`} id={`endAge`} placeholder={`End Age`} />
+                    <Input className="inputboxWhite" defaultValue={currentPlan && currentPlan.address} name={`address`} placeholder={`House Address`} />
                     <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.user_data.startingCost}
+                        type="number"
+                        name={`startingCost`}
+                        id={`startingCost`}
+                        placeholder={`Starting Cost`}
+                    />
+                    <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.user_data.inflation}
+                        type="number"
+                        name={`inflation`}
+                        id={`inflation`}
+                        placeholder={`Inflation`}
+                    />
+                    <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.user_data.startAge}
+                        type="number"
+                        name={`startAge`}
+                        id={`startAge`}
+                        placeholder={`Start Age`}
+                    />
+                    <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.user_data.endAge}
+                        type="number"
+                        name={`endAge`}
+                        id={`endAge`}
+                        placeholder={`End Age`}
+                    />
+                    <Input
+                        className="inputboxWhite"
                         defaultValue={currentPlan && currentPlan.user_data.startInvestment}
                         type="number"
                         name={`startInvestment`}
@@ -264,15 +293,29 @@ export default function Planner(props) {
                         placeholder={`Starting Investment`}
                     />
                     <Input
+                        className="inputboxWhite"
                         defaultValue={currentPlan && currentPlan.user_data.rorInvestment}
                         type="number"
                         name={`rorInvestment`}
                         id={`rorInvestment`}
                         placeholder={`ROR on Investment`}
                     />
-                    <Input defaultValue={currentPlan && currentPlan.sip_data.sipAmount} type="number" name={`sipAmount`} id={`sipAmount`} placeholder={`Sip Amount`} />
-                    <Input defaultValue={currentPlan && currentPlan.sip_data.startDate} name={`startDate`} id={`startDate`} placeholder={`SIP Start Date`} />
-                    <Input defaultValue={currentPlan && currentPlan.sip_data.fundName} name={`fundName`} id={`fundName`} placeholder={`Fund Name`} />
+                    <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.sip_data.sipAmount}
+                        type="number"
+                        name={`sipAmount`}
+                        id={`sipAmount`}
+                        placeholder={`Sip Amount`}
+                    />
+                    <Input
+                        className="inputboxWhite"
+                        defaultValue={currentPlan && currentPlan.sip_data.startDate}
+                        name={`startDate`}
+                        id={`startDate`}
+                        placeholder={`SIP Start Date`}
+                    />
+                    <Input className="inputboxWhite" defaultValue={currentPlan && currentPlan.sip_data.fundName} name={`fundName`} id={`fundName`} placeholder={`Fund Name`} />
                     <Button type="submit">{currentPlan ? "Update" : "Add"}</Button>
                 </form>
             </Modal>

@@ -12,7 +12,7 @@ export default function Modal(props) {
                             <p className="text-black font-semibold text-[18px]">{title}</p>
                             <GrClose onClick={cancel} className="text-black cursor-pointer font-medium" />
                         </div>
-                        <div className="py-4 px-8 max-h-[70vh] overflow-auto">{props.children}</div>
+                        <div className="py-4 px-8 max-h-[70vh]">{props.children}</div>
                         <div className="border border-t w-full py-2 px-8 flex justify-end gap-3">
                             <Button onClick={cancel}>Cancel</Button>
                             <Button>Ok</Button>

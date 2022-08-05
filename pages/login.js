@@ -50,11 +50,21 @@ export default function Login() {
 
                         <form onSubmit={(e) => login(e)} className="pt-6">
                             <div className="w-full mt-4">
-                                <Input required type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" aria-label="Email Address" />
+                                <Input
+                                    className="inputboxBlack"
+                                    required
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Email"
+                                    aria-label="Email Address"
+                                />
                             </div>
 
                             <div className="w-full mt-4">
                                 <Input
+                                    className="inputboxBlack"
                                     required
                                     type="password"
                                     id="password"

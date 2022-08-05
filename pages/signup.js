@@ -79,14 +79,15 @@ export default function Signup() {
 
                     <form onSubmit={(e) => newUser(e)} className="pt-6">
                         <div className="w-full mt-4">
-                            <Input required id="name" name="name" onChange={(e) => setName(e.target.value)} placeholder="Name" />
+                            <Input className="inputboxBlack" required id="name" name="name" onChange={(e) => setName(e.target.value)} placeholder="Name" />
                         </div>
 
                         <div className="w-full mt-4">
-                            <Input required type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                            <Input className="inputboxBlack" required type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
                         </div>
                         <div className="w-full mt-4">
                             <Input
+                                className="inputboxBlack"
                                 required
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -98,7 +99,15 @@ export default function Signup() {
                             />
                         </div>
                         <div className="w-full mt-4">
-                            <Input required type="password" id="conpassword" name="conpassword" onChange={(e) => setConPassword(e.target.value)} placeholder="Confirm Password" />
+                            <Input
+                                className="inputboxBlack"
+                                required
+                                type="password"
+                                id="conpassword"
+                                name="conpassword"
+                                onChange={(e) => setConPassword(e.target.value)}
+                                placeholder="Confirm Password"
+                            />
                         </div>
                         {regex && <p className="text-red-500">Password Didn&apos;t Match!</p>}
 

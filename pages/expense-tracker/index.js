@@ -21,11 +21,11 @@ export default function ExpenseTracker(props) {
     const [expand, setExpand] = useState(false);
     const [date, setDate] = useState(null);
     const [filter, setFilter] = useState(false);
-    const [minRange, setMinRange] = useState(null);
-    const [maxRange, setMaxRange] = useState(null);
-    const [filterMonth, setFilterMonth] = useState(null);
-    const [filterYear, setFilterYear] = useState(null);
-    const [filterDate, setFilterDate] = useState(null);
+    const [minRange, setMinRange] = useState("");
+    const [maxRange, setMaxRange] = useState("");
+    const [filterMonth, setFilterMonth] = useState("def");
+    const [filterYear, setFilterYear] = useState("def");
+    const [filterDate, setFilterDate] = useState("def");
     const [totalAmount, setTotalAmount] = useState(0);
     async function expense(e, request, expense_id) {
         let data;
@@ -109,7 +109,7 @@ export default function ExpenseTracker(props) {
                         {filter && (
                             <div className="absolute top-10 h-[380px] w-full flex flex-col gap-3 bg-lime-100 p-4">
                                 <div>
-                                    <label className="text-black" for="minRange">
+                                    <label className="text-black" htmlFor="minRange">
                                         Minimum Range
                                     </label>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -126,7 +126,7 @@ export default function ExpenseTracker(props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="text-black" for="maxRange">
+                                    <label className="text-black" htmlFor="maxRange">
                                         Maximum Range
                                     </label>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

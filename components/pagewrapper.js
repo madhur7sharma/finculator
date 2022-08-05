@@ -43,7 +43,7 @@ export default function PageWrapper(props) {
                     </div>
                 </div>
             </nav>
-            <main className="max-w-[1300px] mx-auto px-4 pb-24 overflow-hidden">{props.children}</main>
+            <main className="max-w-[1300px] mx-auto px-4 pb-24">{props.children}</main>
             <hr className="h-px mb-6 bg-gray-300 border-none dark:bg-gray-500" />
             <footer className="bg-white dark:bg-gray-800">
                 <div className="max-w-[1300px] mx-auto px-4 py-4">

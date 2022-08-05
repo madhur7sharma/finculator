@@ -34,7 +34,7 @@ export default function Calculator(props) {
                         <form id="Form" onSubmit={(e) => calculate(e)} className="flex flex-col justify-center items-center">
                             <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-6 w-full">
                                 {calData.input.map((item, pos) => {
-                                    return <Input key={pos} name={item.name} placeholder={item.placeholder} />;
+                                    return <Input className="inputboxBlack" key={pos} name={item.name} placeholder={item.placeholder} />;
                                 })}
                             </div>
                             <div className="mt-8 flex items-center justify-center- gap-8">
