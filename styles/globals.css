@@ -7,11 +7,20 @@ body {
     color: white;
 }
 
-.inputbox {
+.inputboxBlack {
     display: block;
     width: 100%;
     padding: 6px 8px;
     background-color: #1f2937;
+    border: solid 1px #9ca3af;
+    border-radius: 6px;
+}
+.inputboxWhite {
+    color: black;
+    display: block;
+    width: 100%;
+    padding: 6px 8px;
+    background-color: #ffffff;
     border: solid 1px #9ca3af;
     border-radius: 6px;
 }

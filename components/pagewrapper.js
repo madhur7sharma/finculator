@@ -8,7 +8,7 @@ export default function PageWrapper(props) {
     const [slide, setSlide] = useState(false);
     const { title = "Finculator" } = props;
     return (
-        <section className="dark">
+        <section className="dark relative">
             <Head>
                 <title>{title}</title>
             </Head>

@@ -219,7 +219,9 @@ var fn = {
         try {
             const user = await User.findOne({ email: email });
             if (user) {
-                console.log(user, details);
+                console.log(details);
+                var parts = details.date.split("-");
+                details.date = new Date(parts[0], parts[1], parts[2]);
                 const newExpense = new Expense(details);
                 if (newExpense) {
                     user.expenses.push(newExpense);
@@ -239,7 +241,8 @@ var fn = {
     update_expense: async function (email, details) {
         try {
             const myExpense = await Expense.findOne({ _id: details._id });
-            console.log("details", details, myExpense);
+            var parts = details.date.split("-");
+            details.date = new Date(parts[0], parts[1], parts[2]);
             if (myExpense) {
                 _.merge(myExpense, details);
                 await myExpense.save();

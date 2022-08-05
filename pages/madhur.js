@@ -1,11 +1,13 @@
-import Anshul from "./anshul";
-
+import { useEffect, useState } from "react";
+import Datepicker from "../components/datepicker";
+import PageWrapper from "../components/pagewrapper";
 export default function Madhur() {
-    const nm = "Anshul";
+    const [date, setDate] = useState(null);
     return (
-        <div>
-            <Anshul name={nm} />
-            <h1 className="text-4xl font-bold text-lime-500">Madhur</h1>
-        </div>
+        <PageWrapper>
+            <div className="min-h-[150px]"></div>
+            <Datepicker date={date} setDate={setDate} />
+            <div className="min-h-[150px]"></div>
+        </PageWrapper>
     );
 }
