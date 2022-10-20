@@ -275,6 +275,20 @@ var fn = {
             return false;
         }
     },
+    get_allusers: async function () {
+        try {
+            const users = await User.find();
+            if (users && users.length > 0) {
+                return users;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    },
+    admins: [],
 };
 
 module.exports = fn;

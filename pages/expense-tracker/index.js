@@ -27,6 +27,7 @@ export default function ExpenseTracker(props) {
     const [filterYear, setFilterYear] = useState("def");
     const [filterDate, setFilterDate] = useState("def");
     const [totalAmount, setTotalAmount] = useState(0);
+    const [filteredArray, setFilteredArray] = useState(props.expenses);
     async function expense(e, request, expense_id) {
         let data;
         if (e) {
@@ -55,24 +56,25 @@ export default function ExpenseTracker(props) {
             }).then(async (res) => {
                 if (res.status === 200) {
                     const dta = await res.json();
+                    console.log(request);
                     if (request === "PATCH") {
                         setModal(false);
                         toast("success", "Plan updated successfully!");
                         _.merge(
-                            expenses.find((item) => item._id == expense_id),
+                            filteredArray.find((item) => item._id == expense_id),
                             dta.data
                         );
-                        setExpenses([...expenses]);
+                        setFilteredArray([...filteredArray]);
                         setCurrentExpense(null);
                     } else if (request === "POST") {
                         setModal(false);
                         toast("success", "Plan added successfully!");
-                        setExpenses([...expenses.concat(dta.data)]);
+                        setFilteredArray([...filteredArray.concat(dta.data)]);
                         setCurrentExpense(null);
                     } else if (request === "DELETE") {
                         setExpand(false);
                         toast("success", "Plan deleted successfully!");
-                        setExpenses([...expenses.filter((item) => item._id !== expense_id)]);
+                        setFilteredArray([...filteredArray.filter((item) => item._id !== expense_id)]);
                         setCurrentExpense(null);
                     }
                 } else {
@@ -95,14 +97,43 @@ export default function ExpenseTracker(props) {
     }
     useEffect(() => {
         let sum = 0;
-        expenses.map((item) => {
+        filteredArray.map((item) => {
             sum += item.amount;
         });
         setTotalAmount(sum);
-    }, [expenses]);
+    }, [filteredArray]);
+    useEffect(() => {
+        setFilteredArray(
+            expenses.filter((x) => {
+                let conf = true;
+                const formattedDate = new Date(x.date);
+                if (filterMonth && filterMonth !== "def") {
+                    if (month[formattedDate.getMonth()] === filterMonth) conf = true;
+                    else return false;
+                }
+                if (filterYear && filterYear !== "def") {
+                    if (formattedDate.getFullYear() == filterYear) conf = true;
+                    else return false;
+                }
+                if (filterDate && filterDate !== "def") {
+                    if (formattedDate.getDate() == filterDate) conf = true;
+                    else return false;
+                }
+                if (minRange) {
+                    if (x.amount >= minRange) conf = true;
+                    else return false;
+                }
+                if (maxRange) {
+                    if (x.amount <= maxRange) conf = true;
+                    else return false;
+                }
+                if (conf) return true;
+            })
+        );
+    }, [filterMonth, filterYear, filterDate, minRange, maxRange]);
     return (
         <PageWrapper title={`Expense Tracker`}>
-            {expenses.length > 0 && (
+            {filteredArray.length > 0 && (
                 <div className="my-28 mb-36">
                     <div className="w-[320px] relative">
                         <Button onClick={() => setFilter(!filter)}>Filter</Button>
@@ -215,40 +246,14 @@ export default function ExpenseTracker(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {expenses
-                                                .filter((x) => {
-                                                    let conf = true;
-                                                    const formattedDate = new Date(x.date);
-                                                    if (filterMonth && filterMonth !== "def") {
-                                                        if (month[formattedDate.getMonth()] === filterMonth) conf = true;
-                                                        else return false;
-                                                    }
-                                                    if (filterYear && filterYear !== "def") {
-                                                        if (formattedDate.getFullYear() == filterYear) conf = true;
-                                                        else return false;
-                                                    }
-                                                    if (filterDate && filterDate !== "def") {
-                                                        if (formattedDate.getDate() == filterDate) conf = true;
-                                                        else return false;
-                                                    }
-                                                    if (minRange) {
-                                                        if (x.amount >= minRange) conf = true;
-                                                        else return false;
-                                                    }
-                                                    if (maxRange) {
-                                                        if (x.amount <= maxRange) conf = true;
-                                                        else return false;
-                                                    }
-                                                    if (conf) return true;
-                                                })
-                                                .map((item, pos) => (
-                                                    <tr key={item._id} className={tui.tableRow} onClick={() => seeExpense(item)}>
-                                                        <td className={tui.tableData}>{pos + 1}</td>
-                                                        <td className={tui.tableData}>{item.description}</td>
-                                                        <td className={tui.tableData}>₹ {item.amount}/-</td>
-                                                        <td className={tui.tableData}>{new Date(item.date).toDateString("en-US")}</td>
-                                                    </tr>
-                                                ))}
+                                            {filteredArray.map((item, pos) => (
+                                                <tr key={item._id} className={tui.tableRow} onClick={() => seeExpense(item)}>
+                                                    <td className={tui.tableData}>{pos + 1}</td>
+                                                    <td className={tui.tableData}>{item.description}</td>
+                                                    <td className={tui.tableData}>₹ {item.amount}/-</td>
+                                                    <td className={tui.tableData}>{new Date(item.date).toDateString("en-US")}</td>
+                                                </tr>
+                                            ))}
                                             <tr className={tui.tableRow}>
                                                 <td className={tui.tableData}></td>
                                                 <td className={tui.tableData}></td>
